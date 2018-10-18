@@ -36,5 +36,3 @@ RUN curl -fsSL https://archive.apache.org/dist/maven/maven-3/$MAVEN_VERSION/bina
 # Again using non-root user 
 USER 10001
 
-# Define default command, can be overriden by passing an argument when running the container
-CMD ["bash"]
