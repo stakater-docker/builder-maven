@@ -21,9 +21,8 @@ ENV M2 $M2_HOME/bin
 ENV PATH $M2:$PATH
 
 # Add jenkins user with hardcoded ID (the one that jenkins expects)
-RUN groupadd -g 233 docker && \
-    adduser -u 10000 -d /home/jenkins -g docker jenkins && \
-    passwd -d jenkins
+RUN addgroup -g 233 docker && \
+    adduser -D -u 10000 -h /home/jenkins -G docker jenkins
 
 # Again using non-root user i.e. stakater as set in base image
 USER jenkins
