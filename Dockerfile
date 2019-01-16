@@ -43,5 +43,7 @@ RUN groupadd -g 233 docker && \
 # Change to jenkins user
 USER jenkins
 
+ENV HOME /home/jenkins
+
 # Define default command, can be overriden by passing an argument when running the container
 CMD ["mvn","-version"]
