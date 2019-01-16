@@ -1,4 +1,4 @@
-FROM stakater/pipeline-tools:SNAPSHOT-PR-8-11
+FROM stakater/pipeline-tools:SNAPSHOT-PR-8-12
 
 # Default to UTF-8 file.encoding
 ENV LANG C.UTF-8
