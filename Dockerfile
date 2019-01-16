@@ -12,7 +12,7 @@ RUN { \
 		echo 'readlink -f /usr/bin/java | sed "s:/bin/java::"'; \
 	} > /usr/local/bin/docker-java-home \
 	&& chmod +x /usr/local/bin/docker-java-home
-ENV JAVA_HOME /usr/lib/jvm/java-1.8.0-openjdk-1.8.0.191.b12-1.el7_6.x86_64/jre
+ENV JAVA_HOME /usr/lib/jvm/java-1.8.0-openjdk-1.8.0.191.b12-1.el7_6.x86_64
 ENV PATH $PATH:${JAVA_HOME}/jre/bin:/usr/lib/jvm/${JAVA_HOME}/bin
 
 ENV JAVA_VERSION 8u191
@@ -36,8 +36,9 @@ ENV MAVEN_VERSION=${MAVEN_VERSION} \
 	PATH=$M2:$PATH
 
 # Add jenkins user with hardcoded ID (the one that jenkins expects)
-RUN addgroup -g 233 docker && \
-    adduser -D -u 10000 -h /home/jenkins -G docker jenkins
+RUN groupadd -g 233 docker && \
+    adduser -u 10000 -d /home/jenkins -g docker jenkins && \
+    passwd -d jenkins
 
 # Change to jenkins user
 USER jenkins
