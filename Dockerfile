@@ -18,8 +18,7 @@ ENV PATH $PATH:${JAVA_HOME}/jre/bin:/usr/lib/jvm/${JAVA_HOME}/bin
 ENV JAVA_VERSION 8u191
 ENV JAVA_YUM_VERSION 1.8.0.191.b12
 
-RUN set -x \
-	yum install -y java-1.8.0-openjdk-${JAVA_YUM_VERSION}
+RUN yum install -y java-1.8.0-openjdk-devel-${JAVA_YUM_VERSION}
 
 # Setting Maven Version that needs to be installed
 ARG MAVEN_VERSION=3.5.4
