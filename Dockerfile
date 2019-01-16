@@ -1,4 +1,4 @@
-FROM stakater/pipeline-tools:v1.16.8
+FROM stakater/pipeline-tools:SNAPSHOT-PR-8-11
 
 # Default to UTF-8 file.encoding
 ENV LANG C.UTF-8
@@ -9,22 +9,17 @@ RUN { \
 		echo '#!/bin/sh'; \
 		echo 'set -e'; \
 		echo; \
-		echo 'dirname "$(dirname "$(readlink -f "$(which javac || which java)")")"'; \
+		echo 'readlink -f /usr/bin/java | sed "s:/bin/java::"'; \
 	} > /usr/local/bin/docker-java-home \
 	&& chmod +x /usr/local/bin/docker-java-home
-ENV JAVA_HOME /usr/lib/jvm/java-1.8-openjdk
-ENV PATH $PATH:/usr/lib/jvm/java-1.8-openjdk/jre/bin:/usr/lib/jvm/java-1.8-openjdk/bin
+ENV JAVA_HOME /usr/lib/jvm/java-1.8.0-openjdk-1.8.0.191.b12-1.el7_6.x86_64/jre
+ENV PATH $PATH:${JAVA_HOME}/jre/bin:/usr/lib/jvm/${JAVA_HOME}/bin
 
 ENV JAVA_VERSION 8u191
-ENV JAVA_ALPINE_VERSION 8.191.12-r0
+ENV JAVA_YUM_VERSION 1.8.0.191.b12
 
 RUN set -x \
-	&& apk add --no-cache \
-		openjdk8="$JAVA_ALPINE_VERSION" \
-	&& [ "$JAVA_HOME" = "$(docker-java-home)" ]
-
-# Changing user to root to install maven
-USER root
+	yum install -y java-1.8.0-openjdk-${JAVA_YUM_VERSION}
 
 # Setting Maven Version that needs to be installed
 ARG MAVEN_VERSION=3.5.4
